@@ -94,10 +94,14 @@ nnoremap <leader>fh <cmd>Telescope help_tags<CR>
 
 nnoremap <leader>e <cmd>NvimTreeToggle<CR>
 
+" Split creation
+nnoremap <leader>sv <cmd>vsplit<CR>
+nnoremap <leader>sh <cmd>split<CR>
+nnoremap <leader>sx <cmd>close<CR>
+
 " buffer navigation
 nnoremap <silent> bn :bn<CR>
 nnoremap <silent> bp :bp<CR>
-nnoremap <silent> bd :close<CR>
 
 " ------------------------------------
 
