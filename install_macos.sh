@@ -57,6 +57,14 @@ brew install --cask font-hack-nerd-font
 brew install --cask font-jetbrains-mono
 brew install --cask font-fira-code
 
+# Install vim-plug
+if [-f $HOME/.vim/autoload/plug.vim]; then
+	echo "Already installed, skipping..."
+else
+	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+
 # Copying and checking out configuration files
 echo "Planting Configuration Files..."
 [ ! -d "$HOME/dotfiles" ] && git clone --bare git@github.com:BuiHuy57/dot-files.git $HOME/dotfiles
