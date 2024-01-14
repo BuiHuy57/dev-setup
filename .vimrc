@@ -9,15 +9,11 @@ set mouse=a
 call plug#begin()
 
 " Colorscheme
-Plug 'dracula/vim'
-Plug 'rebelot/kanagawa.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-Plug 'morhetz/gruvbox'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
 
 " File explorer
 Plug 'nvim-tree/nvim-tree.lua'
@@ -41,6 +37,12 @@ Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 " autopair
 Plug 'windwp/nvim-autopairs'
 
+" Markdown plugin
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
+" jupyter notebook
+Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
+
 call plug#end()
 
 " ------------------------------------
@@ -48,38 +50,7 @@ call plug#end()
 " ------------------------------------
 " COLORSCHEME
 set termguicolors
-" colorscheme dracula
-" colorscheme kanagawa
-" colorscheme tokyonight
-colorscheme catppuccin-macchiato
-" colorscheme gruvbox
-
-lua << EOF
-require('kanagawa').setup({
-    compile = false,             -- enable compiling the colorscheme
-    undercurl = true,            -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true},
-    statementStyle = { bold = true },
-    typeStyle = {},
-    transparent = false,         -- do not set background color
-    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
-    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
-    colors = {                   -- add/modify theme and palette colors
-        palette = {},
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-    },
-    overrides = function(colors) -- add/modify highlights
-        return {}
-    end,
-    theme = "wave",              -- Load "wave" theme when 'background' option is not set
-    background = {               -- map the value of 'background' option to a theme
-        dark = "wave",           -- try "dragon" !
-        light = "lotus"
-    },
-})
-EOF
+colorscheme catppuccin-mocha
 
 " ------------------------------------
 
@@ -102,6 +73,22 @@ nnoremap <leader>sx <cmd>close<CR>
 " buffer navigation
 nnoremap <silent> bn :bn<CR>
 nnoremap <silent> bp :bp<CR>
+nnoremap <silent> bd :bdelete<CR>
+
+" example
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
+
+nnoremap <silent><expr> <LocalLeader>r  :MagmaEvaluateOperator<CR>
+nnoremap <silent>       <LocalLeader>rr :MagmaEvaluateLine<CR>
+xnoremap <silent>       <LocalLeader>r  :<C-u>MagmaEvaluateVisual<CR>
+nnoremap <silent>       <LocalLeader>rc :MagmaReevaluateCell<CR>
+nnoremap <silent>       <LocalLeader>rd :MagmaDelete<CR>
+nnoremap <silent>       <LocalLeader>ro :MagmaShowOutput<CR>
+
+let g:magma_automatically_open_output = v:false
+let g:magma_image_provider = "ueberzug"
 
 " ------------------------------------
 
@@ -209,6 +196,8 @@ let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#hunks#enabled = 0
+:hi airline_c  ctermbg=NONE guibg=NONE
+:hi airline_tabfill ctermbg=NONE guibg=NONE
 
 "-----------------------------------------------------------------------------------
 
