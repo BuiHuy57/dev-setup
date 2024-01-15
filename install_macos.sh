@@ -16,6 +16,8 @@ brew tap koekeishiya/formulae
 
 ## Formulae
 echo "Installing Brew Formulae"
+brew install node
+brew install yarn
 brew install wget
 brew install jq
 brew install ripgrep
@@ -58,7 +60,7 @@ brew install --cask font-jetbrains-mono
 brew install --cask font-fira-code
 
 # Install vim-plug
-if [-f $HOME/.vim/autoload/plug.vim]; then
+if [ -f $HOME/.vim/autoload/plug.vim ]; then
 	echo "Already installed, skipping..."
 else
 	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
@@ -67,8 +69,7 @@ fi
 
 # Copying and checking out configuration files
 echo "Planting Configuration Files..."
-[ ! -d "$HOME/dotfiles" ] && git clone --bare git@github.com:BuiHuy57/dot-files.git $HOME/dotfiles
-git --git-dir=$HOME/dotfiles/ --work-tree=$HOME checkout master
+[ ! -d "$HOME/dot-files" ] && git clone --bare git@github.com:BuiHuy57/dot-files.git $HOME/dot-files
 
 # Installing Fonts
 git clone git@github.com:shaunsingh/SFMono-Nerd-Font-Ligaturized.git /tmp/SFMono_Nerd_Font
@@ -80,7 +81,7 @@ curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.
 source $HOME/.zshrc
 
 # Start Services
-brew services start skhd
-brew services start yabai
+yabai --start-service
+skhd --start-service
 brew services start sketchybar
 brew services start borders
