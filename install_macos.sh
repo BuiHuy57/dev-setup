@@ -19,6 +19,7 @@ echo "Installing Brew Formulae"
 brew install node
 brew install yarn
 brew install wget
+brew install gh
 brew install jq
 brew install ripgrep
 brew install skhd
@@ -34,6 +35,7 @@ brew install zsh-syntax-highlighting
 
 ### Other
 brew install btop
+brew install pop
 brew install lazygit
 brew install dooit
 brew install spotify-tui
@@ -70,6 +72,7 @@ fi
 # Copying and checking out configuration files
 echo "Planting Configuration Files..."
 [ ! -d "$HOME/dot-files" ] && git clone --bare git@github.com:BuiHuy57/dot-files.git $HOME/dot-files
+git --git-dir=$HOME/dot-files/.git --work-tree=$HOME checkout main
 
 # Installing Fonts
 git clone git@github.com:shaunsingh/SFMono-Nerd-Font-Ligaturized.git /tmp/SFMono_Nerd_Font
