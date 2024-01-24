@@ -22,6 +22,7 @@ brew install wget
 brew install gh
 brew install jq
 brew install ripgrep
+brew install switchaudio-osx
 brew install skhd
 brew install sketchybar
 brew install borders

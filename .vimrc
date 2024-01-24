@@ -5,6 +5,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set mouse=a
+set clipboard=unnamed
 
 call plug#begin()
 
@@ -13,7 +14,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 
 " File explorer
 Plug 'nvim-tree/nvim-tree.lua'
@@ -42,6 +43,12 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' 
 
 " jupyter notebook
 Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Remote SSH
+Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3' }
+
+" Terminal
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
 call plug#end()
 
@@ -90,12 +97,30 @@ nnoremap <silent>       <LocalLeader>ro :MagmaShowOutput<CR>
 let g:magma_automatically_open_output = v:false
 let g:magma_image_provider = "ueberzug"
 
+" set
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+" By applying the mappings this way you can pass a count to your
+" mapping to open a specific window.
+" For example: 2<C-t> will open terminal 2
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+
 " ------------------------------------
 
 " ------------------------------------
 " Autopair settings
 lua << EOF
 require("nvim-autopairs").setup {}
+EOF
+
+" ------------------------------------
+
+" ------------------------------------
+" Terminal settings
+lua << EOF
+require("toggleterm").setup()
 EOF
 
 " ------------------------------------
@@ -151,6 +176,7 @@ require'nvim-treesitter.configs'.setup {
         "python",
         "verilog",
         "vim",
+		"rust",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
