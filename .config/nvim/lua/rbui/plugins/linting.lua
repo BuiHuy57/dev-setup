@@ -8,8 +8,6 @@ return {
 		local lint = require("lint")
 
 		lint.linters_by_ft = {
-			c = { "cpplint" },
-			cpp = { "cpplint" },
 			python = { "pylint" },
 			markdown = { "markdownlint" },
 			rust = { "ast-grep" },
