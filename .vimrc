@@ -1,6 +1,7 @@
 syntax on
 set number
 set cursorline
+set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -50,6 +51,11 @@ Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3' }
 " Terminal
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
+" LSP Signature
+Plug 'ray-x/lsp_signature.nvim'
+
+" Copilot
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
 call plug#end()
 
 " ------------------------------------
@@ -78,11 +84,11 @@ nnoremap <leader>sh <cmd>split<CR>
 nnoremap <leader>sx <cmd>close<CR>
 
 " buffer navigation
-nnoremap <silent> bn :bn<CR>
-nnoremap <silent> bp :bp<CR>
-nnoremap <silent> bd :bdelete<CR>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bd :bdelete<CR>
 
-" example
+" MarkDown
 nmap <C-s> <Plug>MarkdownPreview
 nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
@@ -106,6 +112,12 @@ autocmd TermEnter term://*toggleterm#*
 " For example: 2<C-t> will open terminal 2
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+" Copilot chat
+nnoremap <leader>ce <cmd>CopilotChatExplain<cr>
+nnoremap <leader>ct <cmd>CopilotChatTests<cr>
+nnoremap <leader>cv <cmd>CopilotChatVisual<cr>
+nnoremap <leader>cx <cmd>CopilotChatInPlace<cr>
 
 " ------------------------------------
 
@@ -231,4 +243,32 @@ let g:airline#extensions#hunks#enabled = 0
 " Buffer tabs
 lua << EOF
 require("bufferline").setup{}
+EOF
+
+" LSP Signature
+lua << EOF
+require("lsp_signature").setup{}
+EOF
+
+"-----------------------------------------------------------------------------------
+
+"-----------------------------------------------------------------------------------
+" Copilot 
+"
+lua << EOF
+local copilot_chat = require("CopilotChat")
+copilot_chat.setup({
+  debug = true,
+  show_help = "yes",
+  prompts = {
+    Explain = "Explain how it works.",
+    Review = "Review the following code and provide concise suggestions.",
+    Tests = "Briefly explain how the selected code works, then generate unit tests.",
+    Refactor = "Refactor the code to improve clarity and readability.",
+  },
+  build = function()
+    vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+  end,
+  event = "VeryLazy",
+})
 EOF
