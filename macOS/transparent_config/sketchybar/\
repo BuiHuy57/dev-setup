@@ -1,0 +1,66 @@
+#!/bin/bash
+
+source "$HOME/.config/sketchybar/colors.sh"
+source "$HOME/.config/sketchybar/icons.sh"
+
+ITEM_DIR="$HOME/.config/sketchybar/items"
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+
+FONT="SF Pro"
+PADDINGS=3
+
+bar=(
+	height=37
+	color=$BAR_COLOR
+	border_width=2
+	border_color=$BAR_BORDER_COLOR
+	shadow=off
+	position=top
+	sticky=on
+	padding_right=10
+	padding_left=10
+	y_offset=-5
+	margin=-2
+	)
+
+sketchybar --bar "${bar[@]}"
+
+default=(
+	updates=when_shown
+	icon.font="$FONT:Bold:14.0"
+	icon.color=$ICON_COLOR
+	icon.padding_left=$PADDINGS
+	icon.padding_right=$PADDINGS
+	label.font="$FONT:Semibold:13.0"
+	label.color=$LABEL_COLOR
+	label.padding_left=$PADDINGS
+	label.padding_right=$PADDINGS
+	padding_right=$PADDINGS
+	padding_left=$PADDINGS
+	background.height=26
+	background.corner_radius=9
+	background.corner_width=2
+	popup.background.border_width=2
+	popup.background.border_radius=9
+	popup.background.border_color=$POPUP_BORDER_COLOR
+	popup.background.color=$POPUP_BACKGROUND_COLOR
+	popup.blur_radius=20
+	popup.background.shadow.drawing=on
+	)
+
+sketchybar --default "${default[@]}"
+
+# -- Right Side Items -- 
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/cpu.sh"
+
+# -- Center Items --
+
+# -- Left Side Items --
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
+
+
+sketchybar --update
